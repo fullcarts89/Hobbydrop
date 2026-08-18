@@ -1,4 +1,4 @@
-# Insider-Screener — swing trade signals
+# swing — single-position swing trade signals
 
 A single-position, cash-only swing trading system: research harness, honest
 backtest, and real-ish time alerts, all driven by the same code so that what
@@ -27,16 +27,16 @@ python3 -m swing walkforward --start 2005-01-01 --out runs/walkforward
 
 | | this strategy (out of sample) | SPY buy & hold |
 |---|---|---|
-| total return | **+129.2%** | +683.7% |
-| CAGR | **+5.84%** | +15.13% |
-| max drawdown | **−36.2%** | −33.7% |
-| Sharpe | **0.37** | 0.94 |
-| trades | 421 (28.8/yr) | 1 |
-| win rate | 61.3% | — |
-| avg win / avg loss | +2.34% / −3.03% | — |
-| profit factor | 1.18 | — |
-| expectancy | +0.030 R | — |
-| time in market | 54% | 100% |
+| total return | **+169.6%** | +683.7% |
+| CAGR | **+7.02%** | +15.13% |
+| max drawdown | **−42.8%** | −33.7% |
+| Sharpe | **0.40** | 0.94 |
+| trades | 435 (29.8/yr) | 1 |
+| win rate | 61.4% | — |
+| avg win / avg loss | +2.70% / −3.49% | — |
+| profit factor | 1.19 | — |
+| expectancy | +0.037 R | — |
+| time in market | 57% | 100% |
 
 It makes money. It loses to the index on return, on drawdown, and on
 risk-adjusted return simultaneously — while requiring ~29 decisions a year and
@@ -46,16 +46,16 @@ The trade-order bootstrap says the single historical path was also a fairly
 kind one:
 
 ```
-median outcome        $54,922   (from $25,000)
-5th / 95th percentile $16,424 / $187,651
-chance of losing money            15.0%
-chance of a >30% drawdown         89.6%
-chance of a >50% drawdown         31.1%
+median outcome        $67,635   (from $25,000)
+5th / 95th percentile $16,046 / $274,046
+chance of losing money            13.4%
+chance of a >30% drawdown         95.8%
+chance of a >50% drawdown         44.1%
 ```
 
-That last line is the real cost of the all-in constraint. Same edge, same
-trades, different order: a coin-flip's chance of watching a third of the
-account evaporate, and a one-in-three chance of a halving.
+Those last two lines are the real cost of the all-in constraint. Same edge,
+same trades, different order: a near-certainty of watching a third of the
+account evaporate at some point, and close to even odds of a halving.
 
 ## Why — the entry has an edge, and costs eat it
 
@@ -178,8 +178,8 @@ For real-ish time, run `scan` once after the close and `watch` during the
 session:
 
 ```cron
-10 16 * * 1-5  cd /path/to/Insider-Screener && python3 -m swing scan --webhook "$SWING_WEBHOOK_URL"
-*/5 10-16 * * 1-5  cd /path/to/Insider-Screener && python3 -m swing watch --once --webhook "$SWING_WEBHOOK_URL"
+10 16 * * 1-5  cd /path/to/repo && python3 -m swing scan --webhook "$SWING_WEBHOOK_URL"
+*/5 10-16 * * 1-5  cd /path/to/repo && python3 -m swing watch --once --webhook "$SWING_WEBHOOK_URL"
 ```
 
 Times are US/Eastern; the daily bar for a session is only final after the close,
@@ -207,26 +207,79 @@ python3 -m pytest tests/ -q      # 28 tests
   2026, so the era's outright failures are missing, and eight symbols
   (acquisitions and de-listings) dropped out of the fetch entirely. Real
   results would be somewhat worse than shown.
-* **Taxes.** 421 trades held ~5 sessions each are short-term gains, taxed as
+* **Taxes.** 435 trades held ~5 sessions each are short-term gains, taxed as
   income. The comparison against buy-and-hold gets worse after tax, not better.
 * **Multiple testing.** Nine setups and sixteen variants were tried before
   settling on this one. The walk-forward controls for tuning *within* the
-  chosen strategy, not for the strategy having been chosen after looking.
+  chosen strategy, not for the strategy having been chosen after looking. The
+  volatility experiment below shows how large that distinction can be.
 * **Data.** One free source (Yahoo), adjusted by scaling OHLC by the
   adjusted-close ratio. No fundamentals, no earnings dates, no corporate
   actions beyond splits and dividends.
 
-## Where an edge might actually come from
 
-The signal here is a transform of price, competing against everyone else's
-transform of price, and it clears costs by a hair. The repo's original premise —
-Form 4 and 13 filings — is a *different information source* rather than another
-rearrangement of the same one, which is the more promising direction: cluster
-insider buying has documented abnormal returns, and the filing timestamp gives a
-defensible reason the information is not yet in the price.
+## The one promising lead, and why it didn't survive
 
-The harness is built for that. `python3 -m swing edge` will measure any signal
-against the same control on the same terms, and if an insider-derived signal
-shows an edge materially larger than +0.26% per trade, it becomes worth trading
-all-in — because at that point the edge, not the spread, is what you are
-collecting.
+The edge is not spread evenly. Bucketing every signal by ATR% and comparing it
+against control observations *in the same bucket* — so that higher raw returns
+from simply owning volatile names cannot masquerade as edge — it concentrates
+almost entirely in the most volatile names:
+
+| ATR% bucket | signals | signal 5d | control 5d | edge | edge ÷ 0.20% cost | t |
+|---|---|---|---|---|---|---|
+| 0.4–1.4% | 865 | +0.31% | +0.14% | +0.16% | 0.8× | 1.64 |
+| 1.4–1.7% | 1,617 | +0.08% | +0.18% | −0.11% | −0.5× | −0.97 |
+| 1.7–2.0% | 2,206 | +0.33% | +0.24% | +0.09% | 0.5× | 0.86 |
+| 2.0–2.5% | 2,904 | +0.24% | +0.22% | +0.02% | 0.1× | 0.08 |
+| **2.5–13.2%** | 4,798 | **+0.93%** | +0.41% | **+0.52%** | **2.6×** | 1.72 |
+
+That reads like the answer: trade only names with ATR above 2.5% and the edge
+covers costs 2.6× over instead of 1.3×. Setting `min_atr_pct = 0.025` and
+re-running the walk-forward appears to confirm it —
+
+```
++19.50% CAGR, Sharpe 0.80, −38.5% max drawdown   (vs SPY +15.13%)
+```
+
+— which would beat the index. **It is not real.** That 2.5% threshold was
+chosen by looking at the whole sample, then applied to every fold including
+folds from before the data that justified it existed. The walk-forward was
+validating three parameters while the fourth one was smuggled in with hindsight.
+
+The fix is to let the walk-forward choose the volatility filter too, per fold,
+from its own training window. That is what `min_atr_pct` is doing in
+`DEFAULT_GRID`, and it is where the headline **+7.02%** comes from. The fold
+table shows exactly what happened:
+
+```
+2012-2014  min_atr_pct 0.010      2020-2021  min_atr_pct 0.025
+2014-2016  min_atr_pct 0.010      2021-2023  min_atr_pct 0.025
+2016-2018  min_atr_pct 0.010      2023-2025  min_atr_pct 0.025
+2018-2020  min_atr_pct 0.025      2025-2026  min_atr_pct 0.025
+```
+
+The early folds' training windows did not prefer high-volatility names, so an
+honest run of the system in 2012 would not have made that choice. The
++19.50% was the return of knowing the answer in advance; +7.02% is the return
+of having to work it out as you go. The 12-point gap between them is a fair
+estimate of how much a plausible-looking backtest can flatter itself.
+
+The direction still holds — the edge does appear to be larger in volatile
+names, and `t = 1.72` on the top bucket is suggestive rather than conclusive.
+But it is not a large enough or stable enough effect to carry an all-in book.
+
+## Bottom line
+
+Three entry families were tested against a like-for-like control. One is worse
+than random, one has no edge, and one has a real edge of about +0.26% per
+trade that transaction costs take three quarters of. Restricting to where that
+edge is largest does not survive honest validation. Out of sample the whole
+system returns less than the index, draws down harder, and has a 44% chance of
+halving the account somewhere along the way.
+
+The all-in, one-name-at-a-time constraint is not what breaks it — the signal is.
+Concentration multiplies whatever edge you have, and 0.06% net per trade is not
+enough to be worth multiplying. If a signal turns up that clears costs by a
+wide margin, this harness will measure it on the same terms and the
+concentration argument becomes worth revisiting. Until then the honest answer
+is that the index wins.

@@ -31,8 +31,9 @@ from .strategy import SignalBook
 # performance and costs out-of-sample credibility.
 DEFAULT_GRID: dict[str, list] = {
     "oversold_rsi": [5.0, 10.0, 15.0],     # how deep a washout to require
-    "min_momentum": [0.10, 0.20, 0.35],    # how strong the uptrend must be
+    "min_momentum": [0.10, 0.35],          # how strong the uptrend must be
     "exit_rsi": [70.0, 80.0],              # how far to let the bounce run
+    "min_atr_pct": [0.010, 0.025],         # how volatile a name to accept
 }
 
 
