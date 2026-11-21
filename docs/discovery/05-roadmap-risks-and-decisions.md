@@ -51,7 +51,7 @@ The only external blockers are the Stripe platform account (before milestone 4) 
 
 | # | Risk | Likelihood | Impact | Mitigation | Owner |
 |---|---|---|---|---|---|
-| 1 | Target communities prohibit external checkout links | High | Fatal to the channel | Ask moderators before building commerce; choose the niche by where the answer is yes; favour channels the seller controls (Instagram, Discord, own following) | Founder |
+| 1 | Target communities prohibit external checkout links | **Already found** for eight of the ten swap subreddits whose rule could be located; unknown for Facebook groups and Discord | Fatal to the channel | Ask group admins before building commerce; choose the niche by where the answer is yes; favour channels the seller controls (Instagram, Discord, own following) | Founder |
 | 2 | Sellers will not pay about 7% when their current workflow costs about 3% | Medium–high | High | Test the all-in number in interviews; keep the fee rate configurable; consider a buyer-side fee as Depop and Mercari do | Founder |
 | 3 | Buyers do not trust an unfamiliar checkout | Medium | High | Stripe-hosted payment page; seller's community identity on the drop; a plain protection promise on the path to payment; measure checkout-start → paid | Product |
 | 4 | Chargeback and fraud losses exceed fee revenue | Medium | High — one lost $110 dispute erases the margin on 30+ orders | Delayed payout until tracking; item price cap; card and wallet only; Stripe Radar; a pilot loss budget approved by the founder | Founder / Eng |
@@ -70,8 +70,8 @@ The only external blockers are the Stripe platform account (before milestone 4) 
 
 | # | Question | Recommended decision |
 |---|---|---|
-| 1 | **Will the communities allow the link?** Unverified for every swap subreddit; reported as restricted in at least one | Do not build milestones 4–7 until at least two target communities have said yes in writing, or the launch channel has been redefined as seller-owned audiences (Instagram, Discord, mailing lists) where no permission is needed |
-| 2 | **Which niche?** | See [01-product-and-competitive-assessment.md](01-product-and-competitive-assessment.md), section 5 |
+| 1 | **Will the communities allow the link?** Most Reddit swap communities ban it, on the rule texts found (dated; to be checked against live sidebars). Facebook groups and Discord servers are unknown | Do not build milestones 4–7 until at least two target communities have said yes in writing, or the launch channel has been redefined as seller-owned audiences (Instagram, Discord, mailing lists) where no permission is needed |
+| 2 | **Which niche?** Seventeen scored in [01](01-product-and-competitive-assessment.md), section 5 | **Miniatures / Warhammer, provisionally** — sellers already post 8-item price lists and whole armies, trading is spread across Facebook groups rather than one gated subreddit, and the incumbents charge 7% + processing or 13.6%. Confirm only after Facebook group admins answer question 1. Fountain pens if r/Pen_Swap's moderators would permit a compliant flow; and any niche where the founder already has standing beats the scores |
 | 3 | **What does the seller pay, and how is it shown?** | Seller bears card processing: 4% + 2.9% + $0.30, presented as a single all-in figure ("about 7%") with the breakdown beneath. Absorbing processing makes every order a loss. Put the all-in figure to interviewees; if it is rejected, the alternative to test is a buyer-side service fee, not a lower rate |
 | 4 | **What does HobbyDrop promise buyers, and who pays when it goes wrong?** Under the recommended payment design HobbyDrop is liable for every refund and chargeback | A short written promise: full refund if not shipped within 5 business days; report "not as described" within 3 days of delivery; otherwise sales are final. Funded by delayed payout first, then by a founder-approved loss budget for the pilot (suggested $1,000) with a $1,500 item cap |
 | 5 | **Is HobbyDrop the merchant of record, and what follows for tax and licensing?** | Engineering assumes yes, because it keeps seller onboarding light. This needs counsel before live mode; the alternative (seller as settlement merchant) is a contained change to the payment configuration, not a rewrite |
@@ -86,7 +86,7 @@ Nothing beyond these documents has been built. To proceed I need a decision on e
 | B | Stack and architecture in [03-architecture.md](03-architecture.md) | Approve |
 | C | Payment architecture: Stripe Connect, destination charges, hosted Checkout, delayed payout, HobbyDrop as merchant of record pending counsel | Approve for test-mode build |
 | D | Fee model: seller pays 4% plus card processing, shown all-in | Approve as the hypothesis to test |
-| E | Launch niche | See 01, section 5 |
+| E | Launch niche | Miniatures / Warhammer, provisionally, pending the community-permission check. Not needed to start milestones 1–3, which are niche-neutral |
 | F | Sequencing: build milestones 1–3, run the share test, then decide on payments — rather than building straight through | Approve the checkpoint |
 | G | Recurring cost for the pilot: paid Vercel and Supabase tiers, roughly $45/month plus a domain, starting only when the pilot is near | Approve in principle; development uses free tiers |
 

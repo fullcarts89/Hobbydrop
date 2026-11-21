@@ -2,7 +2,7 @@
 
 Status: **discovery findings for founder review.** Researched 2026-11-21.
 
-**How to read the evidence.** Fee and policy figures were read from the companies' own pages unless tagged. *(snippet)* means the primary page blocked direct access and the figure was read from a search excerpt of it. *(third-party)* means a secondary source. *(unverified)* means it could not be confirmed and should be treated as an assumption. Reddit was unreachable during research, so **every statement about subreddit rules is unverified** — which matters, because one of those rules may decide whether the product works.
+**How to read the evidence.** Fee and policy figures were read from the companies' own pages unless tagged. *(snippet)* means the primary page blocked direct access and the figure was read from a search excerpt of it. *(third-party)* means a secondary source. *(unverified)* means it could not be confirmed and should be treated as an assumption. Reddit could not be read directly during research. **Subreddit rules quoted here come from moderator posts and wiki text surfaced through search indexes and mirrors**; each is dated in section 5 and several are years old. They must be checked against the live sidebars before anything is built on them — which matters, because those rules may decide whether the product works.
 
 ## 1. Assessment of the thesis
 
@@ -16,7 +16,9 @@ The PRD rests on three hypotheses. They are not equally strong.
 
 ### The core risk: "bring your own audience" mostly means "post in someone else's community"
 
-The PRD's primary persona is a casual seller with 5–20 items. That person does not have an audience. They have *membership* in a subreddit, Discord server or Facebook group that someone else moderates and whose rules they must follow. Whether those communities allow a link to an external checkout is unknown, and at least one large swap community is reported to require PayPal or Venmo Goods & Services for US sellers *(snippet)*. If moderators say no, the main distribution channel is closed regardless of how good the product is.
+The PRD's primary persona is a casual seller with 5–20 items. That person does not have an audience. They have *membership* in a subreddit, Discord server or Facebook group that someone else moderates and whose rules they must follow. **The evidence found says most of them do not allow it.** Of the swap subreddits whose link rule could be found, eight ban links to outside sales pages — cameras, mechanical keyboards, fountain pens, Pokémon cards, watches, aquarium, knives, and miniatures (in posts) — and only two leave an opening: r/BoardGameExchange (fixed-price external listings allowed) and r/fragranceswap (inventory lists and order forms allowed). Several also require PayPal Goods & Services. Rule texts and dates are in section 5.
+
+That closes Reddit's swap communities as a place to *post* a drop. What remains is Facebook groups and Discord servers (rules unknown, set group by group), links sent in private messages, and audiences the seller actually owns.
 
 The seller who genuinely has an audience is the PRD's Persona B — the enthusiast with an Instagram following, a Discord presence, or a known name on a forum. That is a smaller group, but it is the one for whom the product works as described. **Recommendation: treat Persona B as the launch customer and Persona A as the expansion.**
 
@@ -59,7 +61,7 @@ A casual seller clears out once or twice a year. The PRD's north-star metric —
 
 ### Overall
 
-**The product is worth building as an experiment, not yet as a business.** The engineering is well understood and the cost of finding out is modest. But the PRD understates how good and how cheap the incumbent workflow is, and overstates how much audience the typical seller has. The fastest way to lose three months is to build the full MVP before learning whether a single target community will allow the link. That check costs a few messages to moderators and should happen first.
+**The product is worth building as an experiment, not yet as a business.** The engineering is well understood and the cost of finding out is modest. But the PRD understates how good and how cheap the incumbent workflow is, and overstates how much audience the typical seller has. The fastest way to lose three months is to build the full MVP before learning whether a single target community will allow the link. The research already says the largest Reddit swap communities will not. Finding the communities that will — a few messages to Facebook group admins and Discord owners — should happen first.
 
 ## 2. Competitors
 
@@ -133,7 +135,7 @@ Worth putting directly to interviewees.
 From a swap community with PayPal:
 
 1. It is cheaper — about 3% against about 7%.
-2. The buyers are in the community, and the community may not allow the link.
+2. The buyers are in the community, and most swap subreddits ban the link.
 3. Buyers already trust PayPal's 180 days, and trade history does not carry over.
 4. A sale post already is one link with many items.
 
@@ -143,8 +145,87 @@ From eBay:
 2. eBay's guarantee and brand raise both conversion and achievable price.
 3. Rare items do better at auction.
 
+## 5. Launch niche
+
+Seventeen niches were scored against the PRD's weighted criteria. **Method and limits:** member counts are from GummySearch (pages updated October–November 2026); posting rates are calculated from the latest 100 submissions per subreddit in a public Reddit archive on 2026-11-21; items per post and prices come from small samples (4–24 recent selling posts per subreddit). Facebook, Discord and Instagram community sizes could not be confirmed for any niche. Scores are judgements from that evidence; differences under about 0.3 are noise.
+
+### Scores
+
+Scale 1–5. Weights: activity 20%, resale frequency 20%, inventory depth 15%, transaction value 15%, shipping 10%, low fraud 10%, weak incumbent 10%.
+
+| Niche | Main swap venue (members) | Act. | Freq. | Depth | Value | Ship | Low fraud | Weak inc. | **Total** | External sale links in the main venue |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| Knives / EDC | r/Knife_Swap (123k) | 5 | 5 | 3 | 5 | 5 | 3 | 4 | **4.40** | Banned — and screened out: payment-provider risk |
+| Fountain pens | r/Pen_Swap (88k) | 4 | 5 | 3 | 5 | 5 | 3 | 4 | **4.20** | Banned |
+| Mechanical keyboards | r/mechmarket (307k) | 5 | 4 | 4 | 5 | 4 | 3 | 3 | **4.15** | Banned |
+| **Miniatures / Warhammer** | r/Miniswap (77k) | 4 | 4 | 5 | 5 | 3 | 3 | 3 | **4.00** | Banned in posts; links by private message tolerated (dated rule) |
+| Trading cards | r/pkmntcgtrades (92k) | 5 | 5 | 5 | 3 | 5 | 1 | 1 | 3.90 | Banned |
+| Outdoor gear | r/GearTrade (139k) | 4 | 4 | 3 | 5 | 4 | 4 | 3 | 3.90 | Banned (from a summary, not a verbatim rule) |
+| Fragrance | r/fragranceswap (139k) | 5 | 5 | 3 | 4 | 2 | 2 | 4 | 3.85 | Restricted — inventory lists and order forms allowed |
+| Vinyl | r/VinylCollectors (170k) | 4 | 4 | 4 | 3 | 4 | 4 | 2 | 3.65 | Not found |
+| Board games | r/BoardGameExchange (38k) | 3 | 3 | 5 | 4 | 1 | 5 | 4 | 3.55 | **Allowed** for fixed-price listings |
+| Yarn / fabric | r/Yarnswap | 3 | 3 | 3 | 2 | 5 | 4 | 5 | 3.35 | Not found |
+| Audio | r/AVexchange (77k) | 3 | 4 | 2 | 3 | 4 | 3 | 3 | 3.15 | Not found |
+| LEGO | r/Legomarket (60k) | 3 | 3 | 3 | 4 | 3 | 3 | 2 | 3.05 | Not found |
+| Watches | r/Watchexchange (578k) | 5 | 5 | 1 | 1 | 3 | 1 | 3 | 3.00 | Banned |
+| **Cameras** | r/photomarket (121k) | 4 | 4 | 2 | 2 | 3 | 2 | 2 | 2.90 | Banned |
+| Plants / aquarium | r/AquaSwap (123k) | 4 | 4 | 3 | 1 | 1 | 2 | 4 | 2.90 | Banned |
+| Synths / music gear | r/Gear4Sale (29k) | 2 | 3 | 3 | 3 | 3 | 3 | 1 | 2.60 | Not found |
+| **Cycling** (low confidence) | Pinkbike BuySell | 3 | 3 | 3 | 2 | 1 | 2 | 3 | 2.55 | Not found |
+
+Two things stand out. The PRD's own examples — camera gear and cycling — score near the bottom: cameras sell one or two high-value items at a time into a community that bans the link, and bikes are hard to ship. And the best-scoring niches are exactly the ones with the strictest, best-run swap subreddits.
+
+### The link rules found
+
+| Community | Rule (date of the text found) |
+|---|---|
+| r/photomarket | "Only link to pictures hosted on imgur.com -- no links to other marketplace or personal sites." (sidebar copy, 2023 or earlier) |
+| r/mechmarket | "Linking to your item on any other market or outlet is forbidden." (moderator quoting the rule, 2018) |
+| r/Pen_Swap | "Do not link to stores, items, or users on any other website or forum (e.g., eBay, Etsy, Craigslist, FPN, FPG, Instagram, etc.)." (2020) |
+| r/pkmntcgtrades | "No outside links, references, or advertising: This includes eBay, auction sites, other marketplaces/groups, and other social media." (2025) |
+| r/Watchexchange | "Outside sales links and referral links are not allowed." (third-party summary, July 2026) |
+| r/AquaSwap | "We do not allow posts that redirect users to another website." (2018; a 2026 comment confirms it stands) |
+| r/Miniswap | "No Links to eBay Auctions, Facebook Marketplace, Vinted, Craigslist, Other Trading Sites, etc." (October 2025). A 2013 moderator FAQ: "Whatever you work out with others in PM is fine, IE linking them to buy from your eBay, Etsy, etc..." |
+| r/BoardGameExchange | "Links to external marketplaces, such as eBay or Craigslist are allowed, but they must be exclusively 'buy-it-now' posts." (2024) |
+| r/fragranceswap | No external links except photos, "detailed lists or inventories (e.g., Google Sheets…)" and "order forms" (2025) |
+
+### Recommendation: miniatures / Warhammer — provisionally
+
+It is not the top score. It is the best score among niches where there is evidence of somewhere to share a link.
+
+- **The collection is already the unit of sale.** Sampled r/Miniswap posts list a median of 8 priced items or lots (up to 35), with whole armies sold as one lot for $45 to $5,000. This is the behaviour the product assumes, already happening.
+- **Trading is spread across venues.** Players name Facebook buy/sell/trade groups alongside eBay and r/Miniswap. No single gated community controls the niche.
+- **The incumbents are expensive.** eBay takes 13.6% + $0.40. The niche's own vertical marketplace, miniswap.gg, charges "7% commission on the item price + Stripe processing" — evidence that sellers in this niche will pay more than HobbyDrop proposes, and it points sellers of mixed lots back to eBay.
+- **Baskets, not items, carry the economics.** The median item is about $30, where a 4% fee is $1.20 and fixed payment costs bite. The model works on multi-item orders and whole-army lots, and needs watching.
+
+### The strongest argument against it
+
+- **A direct vertical competitor already exists** in miniswap.gg, with a structured catalogue and eBay sync. Its ownership, scale, and any relationship to the subreddit are unverified.
+- **The subreddit's rules still point the other way.** Its wiki says deals should happen "through Reddit, not someone's personal store", and the private-message allowance dates from 2013.
+- **Facebook group sizes and rules are unverified** — and they are the channel this recommendation leans on.
+- **Authenticity disputes are built in.** Recasts and 3D prints are a known problem; painted models are fragile in the post.
+
+### What would change the pick
+
+- Written permission from r/Pen_Swap moderators for a compliant flow would put **fountain pens** first: best fundamentals (about 55 selling posts a day, $132 median item, envelope shipping, no vertical marketplace found).
+- If the founder already belongs to, or has standing in, any of these communities, that outweighs a half-point of score. Access to the first twenty sellers matters more than the table.
+- **Board games** are the only niche where the main swap subreddit explicitly allows fixed-price external listings; shipping cost ("$12–$18 a game") is what holds the score down.
+
+### Where to find the first 15–20 seller interviews
+
+| Community | Note |
+|---|---|
+| r/Miniswap — https://www.reddit.com/r/Miniswap/ | Transaction posts only; a research post would likely be removed. Message sellers with 10+ item posts individually, and ask the moderators first |
+| Warhammer 40K / AOS Buy Sell Trade USA / Canada (Facebook) — https://www.facebook.com/groups/284832079554329/ | Size and solicitation rules unverified; ask admins. This is also the first place to ask whether a drop link may be posted |
+| American Warhammer / 40k Trade Sale Buy (Facebook) — https://www.facebook.com/groups/American.Warhammer/ | As above |
+| City groups, e.g. Pittsburgh Warhammer 40K (Facebook) — https://www.facebook.com/groups/Pittsburgh40k/ | Members report selling there to avoid eBay |
+| DakkaDakka Swap Shop — https://www.dakkadakka.com/dakkaforum/ | Long-standing traders, some with 100+ trades; solicitation rules unverified |
+| eBay sellers of army lots | The fee-sensitive segment, reachable directly |
+| **Do not post in:** r/Warhammer40k, Bolter & Chainsword | Both prohibit selling and promotion |
+
 ## Key sources
 
+- Subreddit rules and niche data: r/mechmarket https://www.reddit.com/r/mechmarket/comments/36fw58/meta_rules_are_not_an_option/ · r/photomarket sidebar copy https://redditrebuilt.com/r/photomarket · r/Pen_Swap https://www.reddit.com/r/Pen_Swap/comments/ib9hna/wording_change_to_rule_c8_advertising_rule/ · r/Miniswap https://www.reddit.com/r/Miniswap/comments/1o8kgzh/how_to_miniswap_safety_tips_and_verification/ and https://www.reddit.com/r/Miniswap/comments/18ina2/rminiswap_faq/ · r/pkmntcgtrades https://www.reddit.com/r/pkmntcgtrades/comments/1iztvrc/updated_rules_guidelines_february_27_2025/ · r/BoardGameExchange https://www.reddit.com/r/BoardGameExchange/comments/1avdee5/new_to_the_sub_read_this_first/ · r/AquaSwap https://www.reddit.com/r/AquaSwap/comments/9ghqbp/rule_and_flair_changes/ · r/fragranceswap https://www.reddit.com/r/fragranceswap/comments/1kqe9ft/offsite_links/ · r/Knife_Swap https://www.reddit.com/r/Knife_Swap/comments/q5ibtj/meta_whats_with_paypal_and_knives/ · miniswap.gg fees https://miniswap.gg/help-center/blog/miniswap-vs-ebay
 - eBay fees: https://www.ebay.com/help/selling/fees-credits-invoices/selling-fees?id=4822 · off-platform policy: https://www.ebay.com/help/policies/payment-policies/offers-buy-sell-outside-ebay-policy?id=4272 · guarantee: https://www.ebay.com/help/policies/ebay-money-back-guarantee-policy/ebay-money-back-guarantee-policy?id=4210
 - Whatnot fees: https://help.whatnot.com/hc/en-us/articles/4847069165965 · shipping: https://help.whatnot.com/hc/en-us/articles/46768886074765-Shipping-for-sellers-in-the-US
 - Meta merchant policies: https://www.facebook.com/legal/merchant_policies · AI listing: https://about.fb.com/news/2026/03/facebook-marketplace-new-meta-ai-tools-make-selling-faster-and-easier
